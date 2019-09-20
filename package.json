@@ -4,8 +4,8 @@
   "description": "That's my habit-tracker project.",
   "main": "index.js",
   "scripts": {
-    "client-dev": "webpack-dev-server --port 4000 --hot --inline --watch --progress",
-    "server-dev": "opn http://localhost:8000 && nodemon ./app/server/public/server.js localhost 8000",
+    "client": "webpack-dev-server --port 4000 --hot --inline --watch --progress & open http://localhost:4000/",
+    "server": "opn http://localhost:8000 && nodemon ./server/server.js localhost 8000",
     "build": "webpack -p",
     "deploy": "mern-scripts deploy"
   },
