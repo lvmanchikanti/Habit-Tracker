@@ -19,8 +19,10 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
+    "eslint": "^6.4.0",
     "express": "^4.16.2",
     "mongodb": "^2.2.33",
+    "mongoose": "^5.7.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2"
@@ -42,5 +44,14 @@
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lvmanchikanti/Habit-Tracker.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/lvmanchikanti/Habit-Tracker/issues"
+  },
+  "homepage": "https://github.com/lvmanchikanti/Habit-Tracker#readme"
 }
