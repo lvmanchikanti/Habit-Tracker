@@ -3,8 +3,9 @@ Schema = mongoose.Schema;
 
 var User = new Schema({
   id: {
-    type: Number,
-    required: true
+    type: String,
+    required: true,
+    unique: true
   },
   name: {
     type: String,
@@ -13,6 +14,7 @@ var User = new Schema({
   username: {
     type: String,
     required: true,
+    unique: true,
     unique: true
   },
   email: {
@@ -23,7 +25,12 @@ var User = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  collections: [
+    {
+      type: String
+    }
+  ]
 });
 
 var User = mongoose.model("User", userSchema);
