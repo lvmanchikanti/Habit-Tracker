@@ -18,6 +18,6 @@ var Habit = new Schema({
   }
 });
 
-var Habit = mongoose.model("habit", habitSchema);
+var Habit = mongoose.model("Habit", Habit);
 
 module.exports = Habit;

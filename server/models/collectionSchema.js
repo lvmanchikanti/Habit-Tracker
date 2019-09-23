@@ -17,6 +17,6 @@ new Collection = new Schema({
 
 });
 
-var Collection = mongoose.model("collection", collectionSchema);
+var Collection = mongoose.model("Collection", Collection);
 
 module.exports = Collection;
