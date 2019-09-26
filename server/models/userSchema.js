@@ -1,10 +1,9 @@
 var mongoose = require("mongoose");
-Schema = mongoose.Schema;
+var bcrypt = require('bcrypt');
 
-var User = new Schema({
+var User = new mongoose.Schema({
   id: {
     type: String,
-    required: true,
     unique: true
   },
   name: {
@@ -15,7 +14,6 @@ var User = new Schema({
     type: String,
     required: true,
     unique: true,
-    unique: true
   },
   email: {
     type: String,
@@ -33,6 +31,14 @@ var User = new Schema({
   ]
 });
 
-var User = mongoose.model("User", User);
+User.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+}
+
+User.methods.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
+}
+
+var User = mongoose.model("UserSchema", User);
 
 module.exports = User;
