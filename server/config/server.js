@@ -26,6 +26,10 @@ connection.once("open", function() {
 //Routes
 var users = require('../routes/Users.js');
 app.use('/users', users);
+var habits = require('../routes/Habits.js');
+app.use('/habits', habits);
+var groups = require('../routes/Groups.js');
+app.use('/groups', groups);
 
 //POST request to server
 // app.post("/api", (req, res) => {
