@@ -1,12 +1,11 @@
 var express = require('express')
 var router = express.Router()
+const cors = require('cors')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 let User = require("../models/UserSchema.js");
-
-//TEST
-router.get("/api", (req, res) => {
-  res.send("Express server is up and running.");
-});
+router.use(cors());
 
 //Get all users
 router.get("/", (req, res) => {
@@ -19,77 +18,102 @@ router.get("/", (req, res) => {
   });
 });
 
-//Create user account
+//Create user
 router.post('/register', (req, res) => {
-  let { body } = req;
-  let { password } = body;
-  let { email } = body;
-  let { name } = body;
-  let { username } = body;
-  
-  //Checks request body fields
-  if (!name) {
-      return res.send({
-          success: false,
-          message: 'Error: Name cannot be blank.'
-      });
-  }
-  if (!username) {
-      return res.send({
-          success: false,
-          message: 'Error: Username cannot be blank.'
-      });
-  }
-  if (!email) {
-    return res.send({
-      success: false,
-      message: 'Error: Email cannot be blank.'
-    });
-  }
-  if (!password) {
-    return res.send({
-      success: false,
-      message: 'Error: Password cannot be blank.'
-    });
-  }
-  email = email.toLowerCase();
+    let userData = {
+      name: req.body.name,
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password
+    }
 
-  //Check if email already exists
-  User.find({
-    email: email
-  }, (err, previousUsers) => {
-    if (err) {
-      return res.send({
-        success: false,
-        message: "server error"
-      });
-    } else if (previousUsers.length > 0) {
-      return res.send({
-        success: false,
-        message: 'Error: Account already exist.'
-      });
+    //Check fields
+    if(!userData.name) {
+        return res.status(400).json({message: "Name field cannot be blank"});
+    }
+    if(!userData.username) {
+        return res.status(400).json({message: "Username field cannot be blank"});
+    }
+    if(!userData.email) {
+        return res.status(400).json({message: "Email field cannot be blank"});
+    }
+    if(!userData.password) {
+        return res.status(400).json({message: "Password field cannot be blank"});
     }
   
-    // Save the new user
-    const newUser = new User();
-    newUser.name = name;
-    newUser.username = username;
-    newUser.email = email;
-    newUser.password = newUser.generateHash(password);
-    newUser.save((err, user) => {
-      if (err) {
-        return res.send({
-          success: false,
-          newUser: newUser,
-          message: err
-        });
-      }
-      return res.send({
-        success: true,
-        message: newUser
-      });
-    });
-  });
-});
+    User.findOne({
+      email: req.body.email
+    })
+      .then(user => {
+        if (!user) { //User not found
+          bcrypt.hash(req.body.password, 8, (err, hashed) => {
+            userData.password = hashed
+            User.create(userData)
+              .then(user => {
+                res.status(200).json({ status: user.email + ' account registered!' })
+              })
+              .catch(err => {
+                res.status(400).json({error: err})
+              })
+          })
+        } 
+        else { //User found
+          res.status(200).json({ error: 'User already exists' })
+        }
+      })
+      .catch(err => {
+        res.status(400).json({error: err})
+      })
+})
+  
+//Login user
+router.post('/login', (req, res) => {
+    User.find({
+      email: req.body.email
+    })
+      .then(user => {
+        if (user) { //User exists
+          if (bcrypt.compareSync(req.body.password, user.password)) {
+            // Passwords match
+            const payload = {
+              _id: user._id,
+              name: user.name,
+              email: user.email
+            }
+            let token = jwt.sign(payload, process.env.SECRET_KEY, {
+              expiresIn: 1440
+            })
+            res.send(token)
+          } else {
+            // Passwords don't match
+            res.status(400).json({ error: 'User does not exist' })
+          }
+        } else {
+          res.status(400).json({ error: 'User does not exist' })
+        }
+      })
+      .catch(err => {
+        res.status(400).send('error: ' + err)
+      })
+})
+
+//View profile
+// router.get('/profile', (req, res) => {
+//     var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
+  
+//     User.findOne({
+//       _id: decoded._id
+//     })
+//       .then(user => {
+//         if (user) {
+//           res.json(user)
+//         } else {
+//           res.send('User does not exist')
+//         }
+//       })
+//       .catch(err => {
+//         res.send('error: ' + err)
+//       })
+// })
 
 module.exports = router

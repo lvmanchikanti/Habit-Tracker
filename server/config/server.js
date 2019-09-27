@@ -2,7 +2,6 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-const cors = require("cors");
 const MongoClient = require("mongodb").MongoClient;
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -11,9 +10,7 @@ let app = express();
 
 const port = process.env.PORT || 8000;
 
-app.use(cors());
 app.use(bodyParser.json());
-
 app.use(express.static(path.join(__dirname, "../../../build")));
 
 mongoose.connect(config.db.uri, { useNewUrlParser: true });

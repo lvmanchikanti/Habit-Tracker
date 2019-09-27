@@ -1,10 +1,12 @@
 var mongoose = require("mongoose");
 var bcrypt = require('bcrypt');
+var Schema = mongoose.Schema;
 
-var User = new mongoose.Schema({
+var User = new Schema({
   id: {
     type: String,
-    unique: true
+    unique: true,
+    sparse: true
   },
   name: {
     type: String,
@@ -14,6 +16,7 @@ var User = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    sparse: true
   },
   email: {
     type: String,
@@ -26,7 +29,8 @@ var User = new mongoose.Schema({
   },
   collections: [
     {
-      type: String
+      type: String,
+      sparse:true
     }
   ]
 });
@@ -39,6 +43,6 @@ User.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 }
 
-var User = mongoose.model("UserSchema", User);
+var User = mongoose.model("users", User);
 
 module.exports = User;
