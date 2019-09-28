@@ -11,8 +11,6 @@ let app = express();
 
 const port = process.env.PORT || 8000;
 
-let User = require("/Users/lahari/Documents/senior_project/habit-tracker/server/models/userSchema.js");
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -25,42 +23,35 @@ connection.once("open", function() {
   console.log("MongoDB database connection established successfully");
 });
 
-app.get("/", (req, res) => {
-  res.send("Express server is up and running.");
-});
-
-//GET request to server
-app.get("/api", (req, res) => {
-  User.find(function(err, user) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(user);
-    }
-  });
-});
+//Routes
+var users = require('../routes/Users.js');
+app.use('/users', users);
+var habits = require('../routes/Habits.js');
+app.use('/habits', habits);
+var groups = require('../routes/Groups.js');
+app.use('/groups', groups);
 
 //POST request to server
-app.post("/api", (req, res) => {
-  let user = new User(req.body);
-  user
-    .save()
-    .then(user => {
-      res.status(200).json({ user: "User added successfully" });
-    })
-    .catch(err => {
-      res.status(400).send("adding new user failed");
-    });
-});
+// app.post("/api", (req, res) => {
+//   let user = new User(req.body);
+//   user
+//     .save()
+//     .then(user => {
+//       res.status(200).json({ user: "User added successfully" });
+//     })
+//     .catch(err => {
+//       res.status(400).send("adding new user failed");
+//     });
+// });
 
-//DELETE request to server
-app.delete("/api", (req, res) => {});
+// //DELETE request to server
+// app.delete("/api", (req, res) => {});
 
-//PUT request to server
-app.put("/api", (req, res) => {});
+// //PUT request to server
+// app.put("/api", (req, res) => {});
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../../../build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "../../../build", "index.html"));
+// });
 
 app.listen(port, _ => console.log(`The server is listening on port ${port}`));
