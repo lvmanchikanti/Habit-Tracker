@@ -11,7 +11,10 @@ new Collection = new Schema({
         type: String,
         require: true
     },
-    habits: [{
+    userIds: [{
+        type: String
+    }],
+    habitIds: [{
         type: String
     }]
 
