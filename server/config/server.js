@@ -28,7 +28,7 @@ var users = require("../routes/Users.js");
 app.use("/users", users);
 var habits = require("../routes/Habits.js");
 app.use("/habits", habits);
-var collection = require("../routes/Collections.js/index.js");
+var collection = require("../routes/Collections.js");
 app.use("/collections", collection);
 
 //POST request to server

@@ -1,12 +1,16 @@
-var express = require("express");
-var router = express.Router();
+var collection = require("../controllers/collectionController.js"),
+  express = require("express"),
+  router = express.Router();
 
-//TEST
-router.get("/", (req, res) => {
-  res.send("Express server is up and running in Collections.js.");
-});
+// collections/
+router
+  .route("/")
+  .get(collection.listAll) //gets all collections
+  .post(collection.create);
 
-//GET to return all the habits associated + members added
-router.get("/collectionId", (req, res) => {});
+// collections/id/
+router.route("/:_id").get(collection.read);
+
+//router.router("/:_id/habitId").get(collection.retrieveHabits);
 
 module.exports = router;
