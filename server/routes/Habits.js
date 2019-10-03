@@ -1,9 +1,8 @@
 var express = require('express')
 var router = express.Router()
+var habit = require("../controllers/habitController.js")
 
-//TEST
-router.get("/", (req, res) => {
-  res.send("Express server is up and running in Habits.js.");
-});
+//Create habit
+router.route("/create").post(habit.create);
 
 module.exports = router
