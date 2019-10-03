@@ -2,19 +2,22 @@ var mongoose = require("mongoose");
 Schema = mongoose.Schema;
 
 var Habit = new Schema({
-  habitId: {
+  id: {
     type: String,
     require: true,
-    unique: true
+    unique: true,
+    sparse: true
   },
-  name: {
+  habitName: {
     type: String,
-    require: true
+    require: true,
+    sparse: true
   },
   collectionId: {
     type: String,
     require: true,
-    unique: true
+    unique: true,
+    sparse: true
   }
 });
 
