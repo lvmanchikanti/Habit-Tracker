@@ -15,7 +15,11 @@ router.route("/login").post(user.loginUser);
 router.route("/").get(user.listAll);
 
 //Get user by id
-router.route("/:_id").get(user.getUserById);
+router.route("/:_id")
+    .get(user.getUserById)
+    .put(user.updateCollection);
+
+//Update collections
 
 //View profile - admin
 //router.route("/myprofile").get(user.getMyProfile);

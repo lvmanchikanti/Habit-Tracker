@@ -110,6 +110,24 @@ exports.getUserById = function(req, res) {
     });
 };
 
+//PUT - update collection (check for duplicates later)
+exports.updateCollection = function(req, res) {
+    let body = {
+        habitId: req.body.habitId
+    }
+    User.findByIdAndUpdate(req.params._id,
+      { $push: {collections: body.habitId} })
+     .then(user => {
+          if(!user) {
+              return res.status(400).json("error");
+          }
+          res.status(200).json({user: user});
+     })
+     .catch(err => {
+      res.status(400).send('error: ' + err)
+    })
+}
+
 //GET - my user profile - admin
 // exports.getMyProfile = function(req, res) {
 //     var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
