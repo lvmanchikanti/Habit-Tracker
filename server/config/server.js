@@ -24,12 +24,12 @@ connection.once("open", function() {
 });
 
 //Routes
-var users = require('../routes/Users.js');
-app.use('/users', users);
-var habits = require('../routes/Habits.js');
-app.use('/habits', habits);
-var groups = require('../routes/Groups.js');
-app.use('/groups', groups);
+var users = require("../routes/Users.js");
+app.use("/users", users);
+var habits = require("../routes/Habits.js");
+app.use("/habits", habits);
+var collection = require("../routes/Collections.js");
+app.use("/collections", collection);
 
 //POST request to server
 // app.post("/api", (req, res) => {
