@@ -15,8 +15,6 @@ var Habit = new Schema({
   },
   collectionId: {
     type: String,
-    require: true,
-    unique: true,
     sparse: true
   }
 });
