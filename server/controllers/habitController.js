@@ -4,8 +4,12 @@ var express = require("express"),
 
 //POST - create habit
 exports.create = function(req, res) {
+  console.log(req.body);
+  //TODO refactor to use ES6 destructuring syntax
+
   let habitData = {
-    habitName: req.body.habitName
+    habitName: req.body.habitName,
+    collectionId: req.body.habitGroupID
   };
 
   //Check fields
