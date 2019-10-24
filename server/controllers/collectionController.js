@@ -42,3 +42,19 @@ exports.read = function(req, res) {
     }
   });
 };
+
+// psuh a new habit id in a groups habit id array
+// called from habitSchema in the mongoose post middleware
+exports.addHabitToGroup = function(habitId, collectionId) {
+  Collection.findOneAndUpdate(
+    { _id: collectionId },
+    { $push: { habitIds: habitId } },
+    function(error, success) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("success: ", success);
+      }
+    }
+  );
+};

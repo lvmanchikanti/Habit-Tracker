@@ -4,7 +4,6 @@ var express = require("express"),
 
 //POST - create habit
 exports.create = function(req, res) {
-  console.log(req.body);
   //TODO refactor to use ES6 destructuring syntax
 
   let habitData = {
@@ -63,7 +62,6 @@ exports.updateCollectionId = function(req, res) {
 exports.getAllHabits = function(req, res) {
   Habit.find({}, function(err, data) {
     if (err) {
-      console.log(err);
       res.status(400).send(err);
     } else {
       res.json(data);

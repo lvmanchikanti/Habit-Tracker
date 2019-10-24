@@ -6,7 +6,8 @@ var collection = require("../controllers/collectionController.js"),
 router
   .route("/")
   .get(collection.listAll) //gets all collections
-  .post(collection.create);
+  .post(collection.create)
+  .put(collection.addHabitToGroup);
 
 // collections/id/
 router.route("/:_id").get(collection.read);
