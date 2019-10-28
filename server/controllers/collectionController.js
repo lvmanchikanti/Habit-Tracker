@@ -58,3 +58,25 @@ exports.addHabitToGroup = function(habitId, collectionId) {
     }
   );
 };
+
+// ES6 syntax
+exports.deleteHabit = (req, res) => {
+  console.log("delete request body: ", req.body);
+  let habitId = req.body.habitId;
+  let collectionId = req.body.groupId;
+
+  console.log("delete habit collection control: ", habitId, " ", collectionId);
+  Collection.findOneAndUpdate(
+    { _id: collectionId },
+    { $pull: { habitIds: habitId } },
+    (error, success) => {
+      if (error) {
+        console.log(error);
+        res.status(400).json(error);
+      } else {
+        console.log("success: ", success);
+        res.status(200).json(success);
+      }
+    }
+  );
+};

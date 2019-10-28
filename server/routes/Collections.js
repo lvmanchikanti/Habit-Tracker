@@ -12,6 +12,6 @@ router
 // collections/id/
 router.route("/:_id").get(collection.read);
 
-//router.router("/:_id/habitId").get(collection.retrieveHabits);
+router.route("/deleteHabit").delete(collection.deleteHabit);
 
 module.exports = router;

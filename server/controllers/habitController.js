@@ -31,7 +31,6 @@ exports.create = function(req, res) {
 //GET - Get habit by id
 exports.getHabitById = function(req, res) {
   var habitId = req.params._id;
-
   Habit.findById(habitId, function(err, habit) {
     if (err) {
       res.status(400).json({ error: "Habit not found" });
@@ -65,6 +64,37 @@ exports.getAllHabits = function(req, res) {
       res.status(400).send(err);
     } else {
       res.json(data);
+    }
+  });
+};
+
+// begin convertign to ES6
+exports.deleteHabit = (req, res) => {
+  Habit.findByIdAndRemove(req.params._id, (err, deletedHabit) => {
+    if (err) {
+      res.status(400).send(err);
+    } else if (deletedHabit === null) {
+      console.log("habit id didn't match anything in database");
+      res.status(404).send("habit id didn't match anything in database");
+    } else if (deletedHabit) {
+      console.log("check: ", deletedHabit);
+      res.status(200).json(deletedHabit);
+    }
+  });
+};
+
+//Get all habits that match the ids in the array
+exports.getManyHabits = (req, res) => {
+  console.log("many body: ", req.body);
+
+  Habit.find({ _id: { $in: req.body } }, (err, habits) => {
+    if (err) {
+      res.status(400).send(err);
+    } else if (habits === null) {
+      res.status(404).send("habit ids didn't match anything in database");
+    } else if (habits) {
+      console.log("habits found: ", habits);
+      res.status(200).json(habits);
     }
   });
 };
