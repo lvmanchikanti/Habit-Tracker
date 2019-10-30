@@ -97,6 +97,7 @@ exports.listAll = function(req, res) {
     });
 };
 
+//GET - get user by id
 exports.getUserById = function(req, res) {
     var userId = req.params._id;
 
@@ -110,16 +111,16 @@ exports.getUserById = function(req, res) {
     });
 };
 
-//PUT - update collection (check for duplicates later)
+//PUT - update collection id array (check for duplicates later)
 exports.updateCollection = function(req, res) {
     let body = {
-        habitId: req.body.habitId
+        collectionId: req.body.collectionId
     }
     User.findByIdAndUpdate(req.params._id,
-      { $push: {collections: body.habitId} })
+      { $push: {collections: body.collectionId} })
      .then(user => {
           if(!user) {
-              return res.status(400).json("error");
+              return res.status(400).json("user does not exist");
           }
           res.status(200).json({user: user});
      })
@@ -128,6 +129,7 @@ exports.updateCollection = function(req, res) {
     })
 }
 
+//TODO later: when Front end is set up because of token
 //GET - my user profile - admin
 // exports.getMyProfile = function(req, res) {
 //     var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)

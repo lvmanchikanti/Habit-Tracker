@@ -19,8 +19,8 @@ router.route("/:_id")
     .get(user.getUserById)
     .put(user.updateCollection);
 
-//Update collections
 
+//TODO: later when front end is set up
 //View profile - admin
 //router.route("/myprofile").get(user.getMyProfile);
 

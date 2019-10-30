@@ -28,27 +28,4 @@ app.use("/habits", habits);
 var collection = require("../routes/Collections.js");
 app.use("/collections", collection);
 
-//POST request to server
-// app.post("/api", (req, res) => {
-//   let user = new User(req.body);
-//   user
-//     .save()
-//     .then(user => {
-//       res.status(200).json({ user: "User added successfully" });
-//     })
-//     .catch(err => {
-//       res.status(400).send("adding new user failed");
-//     });
-// });
-
-// //DELETE request to server
-// app.delete("/api", (req, res) => {});
-
-// //PUT request to server
-// app.put("/api", (req, res) => {});
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "../../../build", "index.html"));
-// });
-
 app.listen(port, _ => console.log(`The server is listening on port ${port}`));
