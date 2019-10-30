@@ -42,3 +42,41 @@ exports.read = function(req, res) {
     }
   });
 };
+
+// psuh a new habit id in a groups habit id array
+// called from habitSchema in the mongoose post middleware
+exports.addHabitToGroup = function(habitId, collectionId) {
+  Collection.findOneAndUpdate(
+    { _id: collectionId },
+    { $push: { habitIds: habitId } },
+    function(error, success) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("success: ", success);
+      }
+    }
+  );
+};
+
+// ES6 syntax
+exports.deleteHabit = (req, res) => {
+  console.log("delete request body: ", req.body);
+  let habitId = req.body.habitId;
+  let collectionId = req.body.groupId;
+
+  console.log("delete habit collection control: ", habitId, " ", collectionId);
+  Collection.findOneAndUpdate(
+    { _id: collectionId },
+    { $pull: { habitIds: habitId } },
+    (error, success) => {
+      if (error) {
+        console.log(error);
+        res.status(400).json(error);
+      } else {
+        console.log("success: ", success);
+        res.status(200).json(success);
+      }
+    }
+  );
+};
