@@ -3,13 +3,6 @@ var router = express.Router();
 var habit = require("../controllers/habitController.js");
 
 //get all habits
-<<<<<<< HEAD
-router.route("/").get(habit.getAllHabits);
-
-//Create habit
-router.route("/create").post(habit.create);
-
-=======
 // habits/
 router.route("/").get(habit.getAllHabits);
 
@@ -26,7 +19,6 @@ router.route("/getMany").post(habit.getManyHabits);
 router.route("/delete/:_id").delete(habit.deleteHabit);
 
 // habits/12345
->>>>>>> 4e4a6c2404f40c2609ef9fec5c036df9d6a52514
 router
   .route("/:_id")
   .get(habit.getHabitById) //Get habit by id
