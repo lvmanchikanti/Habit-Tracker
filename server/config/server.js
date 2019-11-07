@@ -7,9 +7,11 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const config = require("./config");
 let app = express();
+var cors = require('cors')
 
 const port = process.env.PORT || 8000;
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../../../build")));
 

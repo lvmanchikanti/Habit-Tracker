@@ -4,7 +4,7 @@
   "description": "That's my habit-tracker project.",
   "main": "index.js",
   "scripts": {
-    "server": "opn http://localhost:8000 && nodemon ./server/server.js localhost 8000",
+    "server": "nodemon ./server/server.js localhost 8000",
     "start": "npm run server",
     "deploy": "mern-scripts deploy"
   },
@@ -18,7 +18,7 @@
     "axios": "^0.19.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.2",
-    "cors": "^2.8.4",
+    "cors": "^2.8.5",
     "dotenv": "^4.0.0",
     "eslint": "^6.4.0",
     "express": "^4.16.2",
