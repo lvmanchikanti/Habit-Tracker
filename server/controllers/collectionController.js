@@ -19,6 +19,7 @@ exports.create = function(req, res) {
 
 //GET all collections
 exports.listAll = function(req, res) {
+  console.log("req body is: ", req.body);
   Collection.find({}, function(err, data) {
     if (err) {
       console.log(err);
@@ -76,6 +77,50 @@ exports.deleteHabit = (req, res) => {
       } else {
         console.log("success: ", success);
         res.status(200).json(success);
+      }
+    }
+  );
+};
+
+//deleting the entire group or collection
+exports.deleteCollection = (req, res) => {
+  console.log("delete req body: ", req.body);
+  let collectionId = req.params._id;
+
+  console.log("delete collection: ", collectionId);
+  Collection.findByIdAndDelete(
+    { _id: collectionId },
+    //pull collectionId from collections in user schema!
+    { $pull: { collection: collectionId } },
+    (error, success) => {
+      if (error) {
+        console.log(error);
+        res.status(400).json(error);
+      } else {
+        console.log("success: ", success);
+        res.status(200).json(success);
+      }
+    }
+  );
+};
+
+//edit groups by changing the name or adding more members
+exports.editCollection = (req, res) => {
+  console.log("editing req body: ", req.body);
+
+  let name = req.body.name;
+  let userId = req.body.userId;
+  let collectionId = req.params._id;
+
+  Collection.findOneAndUpdate(
+    { _id: collectionId },
+    name,
+    { $push: { userIds: userId } },
+    function(error, success) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("success: ", success);
       }
     }
   );
