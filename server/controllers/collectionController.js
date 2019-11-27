@@ -103,3 +103,25 @@ exports.deleteCollection = (req, res) => {
     }
   );
 };
+
+//edit groups by changing the name or adding more members
+exports.editCollection = (req, res) => {
+  console.log("editing req body: ", req.body);
+
+  let name = req.body.name;
+  let userId = req.body.userId;
+  let collectionId = req.params._id;
+
+  Collection.findOneAndUpdate(
+    { _id: collectionId },
+    name,
+    { $push: { userIds: userId } },
+    function(error, success) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("success: ", success);
+      }
+    }
+  );
+};
