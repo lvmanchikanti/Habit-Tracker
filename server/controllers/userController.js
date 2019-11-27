@@ -71,7 +71,8 @@ exports.loginUser = function(req, res) {
               let token = jwt.sign(payload, process.env.SECRET_KEY, {
                 expiresIn: 1440
               })
-              res.status(200).json({success: true, token: token, payload: payload})
+              //res.status(200).json({success: true, token: token, payload: payload})
+              res.send(token)
             } else {
               // Passwords don't match
               res.status(400).json({ error: 'Password does not match' })
@@ -131,20 +132,20 @@ exports.updateCollection = function(req, res) {
 
 //TODO later: when Front end is set up because of token
 //GET - my user profile - admin
-// exports.getMyProfile = function(req, res) {
-//     var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
+exports.getMyProfile = function(req, res) {
+    var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
   
-//     User.findOne({
-//       _id: decoded._id
-//     })
-//       .then(user => {
-//         if (user) {
-//           res.json(user)
-//         } else {
-//           res.send('User does not exist')
-//         }
-//       })
-//       .catch(err => {
-//         res.send('error: ' + err)
-//       })
-// };
+    User.findOne({
+      _id: decoded._id
+    })
+      .then(user => {
+        if (user) {
+          res.json(user)
+        } else {
+          res.send('User does not exist')
+        }
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+};
