@@ -18,6 +18,14 @@ var habitSchema = new Schema({
     type: String,
     sparse: true,
     unique: false
+  },
+  metric: {
+    currentTotal: {
+      type: Number
+    },
+    goalTotal: {
+      type: Number
+    }
   }
 });
 
